@@ -1,0 +1,7 @@
+# Additional python libraries for "Statistics for Cosmology"
+# Note: Google Colab already includes numpy, scipy, matplotlib, pandas, seaborn, sklearn.
+
+astroML
+astropy
+corner
+emcee
