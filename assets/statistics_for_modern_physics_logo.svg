@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
   <title id="title">Statistics for Modern Physics logo</title>
-  <desc id="desc">A navy course logo with probability curves, data points, an atom-like orbit, and the text Statistics for Modern Physics.</desc>
+  <desc id="desc">A navy course logo with probability curves, data points, an atom-like orbit, and the course title Statistics for Modern Physics.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#08213f"/>
@@ -53,24 +53,12 @@
     <circle cx="637" cy="258" r="8" fill="#f7c948"/>
   </g>
 
-  <g transform="translate(468 102)">
-    <text x="0" y="0" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="0">
+  <g transform="translate(468 128)">
+    <text x="0" y="0" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="0">
       Statistics
     </text>
-    <text x="0" y="64" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="0">
+    <text x="0" y="72" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="0">
       for Modern Physics
     </text>
-    <text x="2" y="116" fill="#d7ecff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="22" font-weight="500">
-      reproducible notebooks • inference • simulation • data-driven physics
-    </text>
-  </g>
-
-  <g transform="translate(470 262)" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="18" fill="#ffffff" opacity="0.9">
-    <rect x="0" y="-25" width="142" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
-    <text x="23" y="2">Jupyter</text>
-    <rect x="162" y="-25" width="112" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
-    <text x="193" y="2">Colab</text>
-    <rect x="294" y="-25" width="88" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
-    <text x="323" y="2">Git</text>
   </g>
 </svg>
