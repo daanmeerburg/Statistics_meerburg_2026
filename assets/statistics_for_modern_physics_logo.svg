@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Statistics for Modern Physics logo</title>
+  <desc id="desc">A navy course logo with probability curves, data points, an atom-like orbit, and the text Statistics for Modern Physics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08213f"/>
+      <stop offset="0.55" stop-color="#0d4c7c"/>
+      <stop offset="1" stop-color="#101827"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8bd3ff"/>
+      <stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#8ef0c7"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="360" rx="30" fill="url(#bg)"/>
+
+  <g opacity="0.22" stroke="#ffffff" stroke-width="1">
+    <path d="M40 70H1160M40 130H1160M40 190H1160M40 250H1160M40 310H1160"/>
+    <path d="M90 35V325M190 35V325M290 35V325M390 35V325M490 35V325M590 35V325M690 35V325M790 35V325M890 35V325M990 35V325M1090 35V325"/>
+  </g>
+
+  <g transform="translate(90 56)" filter="url(#soft-shadow)">
+    <rect x="0" y="0" width="320" height="248" rx="24" fill="#ffffff" opacity="0.08" stroke="#ffffff" stroke-opacity="0.22"/>
+    <path d="M28 190
+             C62 188 78 160 96 124
+             C119 78 145 48 171 48
+             C197 48 223 78 246 124
+             C264 160 280 188 314 190"
+          fill="none" stroke="url(#curve)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M34 202H310" stroke="#ffffff" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round"/>
+    <path d="M54 202C92 168 119 150 152 150C190 150 213 173 246 202" fill="none" stroke="#f7c948" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+    <circle cx="70" cy="150" r="7" fill="#8bd3ff"/>
+    <circle cx="102" cy="111" r="7" fill="#8ef0c7"/>
+    <circle cx="135" cy="78" r="7" fill="#ffffff"/>
+    <circle cx="171" cy="55" r="7" fill="#f7c948"/>
+    <circle cx="207" cy="83" r="7" fill="#ffffff"/>
+    <circle cx="240" cy="121" r="7" fill="#8ef0c7"/>
+    <circle cx="273" cy="154" r="7" fill="#8bd3ff"/>
+  </g>
+
+  <g transform="translate(360 26)" opacity="0.95">
+    <ellipse cx="645" cy="154" rx="104" ry="34" fill="none" stroke="#8bd3ff" stroke-width="5" transform="rotate(-18 645 154)"/>
+    <ellipse cx="645" cy="154" rx="104" ry="34" fill="none" stroke="#8ef0c7" stroke-width="5" transform="rotate(42 645 154)"/>
+    <ellipse cx="645" cy="154" rx="104" ry="34" fill="none" stroke="#f7c948" stroke-width="5" transform="rotate(102 645 154)"/>
+    <circle cx="645" cy="154" r="13" fill="#ffffff"/>
+    <circle cx="736" cy="126" r="8" fill="#8bd3ff"/>
+    <circle cx="572" cy="96" r="8" fill="#8ef0c7"/>
+    <circle cx="637" cy="258" r="8" fill="#f7c948"/>
+  </g>
+
+  <g transform="translate(468 102)">
+    <text x="0" y="0" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="0">
+      Statistics
+    </text>
+    <text x="0" y="64" fill="#ffffff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="0">
+      for Modern Physics
+    </text>
+    <text x="2" y="116" fill="#d7ecff" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="22" font-weight="500">
+      reproducible notebooks • inference • simulation • data-driven physics
+    </text>
+  </g>
+
+  <g transform="translate(470 262)" font-family="Inter, Avenir, Helvetica, Arial, sans-serif" font-size="18" fill="#ffffff" opacity="0.9">
+    <rect x="0" y="-25" width="142" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
+    <text x="23" y="2">Jupyter</text>
+    <rect x="162" y="-25" width="112" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
+    <text x="193" y="2">Colab</text>
+    <rect x="294" y="-25" width="88" height="42" rx="21" fill="#ffffff" opacity="0.12"/>
+    <text x="323" y="2">Git</text>
+  </g>
+</svg>
