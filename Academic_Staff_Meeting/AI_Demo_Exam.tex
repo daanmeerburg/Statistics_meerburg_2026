@@ -1,0 +1,288 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={7in, 9in}]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage[shortlabels]{enumitem}
+\usepackage{color}
+\usepackage[most]{tcolorbox}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{ifthen}
+
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+\pagestyle{fancy}
+
+\newcommand{\givesolutions}{true}
+\newcommand{\givenosolutions}{false}
+\newcommand{\answer}[2]{%
+\ifthenelse{\equal{#2}{true}}%
+{{\color{blue}#1}}%
+{}%
+}
+
+\newcommand{\examtitle}{Statistics for Modern Physics 2026 --- AI Demo Exam}
+\newcommand{\examdate}{Academic Staff Meeting Demo}
+\newcommand{\examlocation}{TBD}
+\newcommand{\examduration}{120 mins (written portion)}
+\newcommand{\totalpoints}{90}
+\newcommand{\problemonepoints}{24}
+\newcommand{\problemtwopoints}{42}
+\newcommand{\problemthreepoints}{24}
+\newcommand{\gradingrule}{Suggested scale: 1 + (\# Total)/10}
+
+\newsavebox{\mybox}
+\newenvironment{ansbox}[1]{%
+  \begin{lrbox}{\mybox}\begin{minipage}[t][#1]{\linewidth}%
+}{%
+  \vfill\hfill\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}%
+}
+
+\lhead{Name:}
+\rhead{Student Number:\hspace{6cm} \thepage}
+\pagenumbering{gobble}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Huge{\examtitle}}
+\\\Large{\examdate, \examlocation}\\
+\Large{Duration: \examduration}
+\end{center}
+
+\textbf{Before you start, read the following:}
+\begin{itemize}
+    \item This written exam is designed for approximately 120 minutes. 90 minutes are allocated on the course materials. The remaining 30 minutes of the full exam block are reserved for project-related questions.
+    \item Make clear arguments and derivations and use correct notation.
+    \item Use the reference equations below where useful; the point is understanding, not memorization.
+    \item For the code question, write the correct comment letter in each \verb|# [ ]| slot. Some comments are correct, some are almost correct, and some do not belong at all.
+\end{itemize}
+
+\textbf{(Possibly) Useful equations and definitions}
+
+\begin{itemize}[leftmargin=2em]
+\item Bayes' theorem:
+\[
+p(\theta\mid D,M)=\frac{p(D\mid\theta,M)p(\theta\mid M)}{p(D\mid M)}.
+\]
+\item Gaussian likelihood with known $\sigma$:
+\[
+p(\{x_i\}\mid \mu)=\prod_{i=1}^N\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\left[-\frac{(x_i-\mu)^2}{2\sigma^2}\right].
+\]
+\item Normal prior on $\mu$:
+\[
+p(\mu\mid M)=\frac{1}{\sqrt{2\pi\tau^2}}\exp\!\left[-\frac{(\mu-\mu_0)^2}{2\tau^2}\right].
+\]
+\item Weighted mean for independent Gaussian measurements:
+\[
+\hat\mu = \frac{\sum_i x_i/\sigma_i^2}{\sum_i 1/\sigma_i^2},
+\qquad
+\sigma_{\hat\mu}^2 = \left(\sum_i \frac{1}{\sigma_i^2}\right)^{-1}.
+\]
+\item Bayesian evidence:
+\[
+\mathcal Z=p(D\mid M)=\int p(D\mid\theta,M)p(\theta\mid M)\,d\theta.
+\]
+\item Bayes factor:
+\[
+B_{10}=\frac{\mathcal Z_1}{\mathcal Z_0}.
+\]
+\item Metropolis acceptance rule for a symmetric proposal:
+\[
+\alpha=\min\!\left(1,\frac{p(\theta'\mid D)}{p(\theta\mid D)}\right).
+\]
+\item Bootstrap standard error:
+\[
+\widehat{\mathrm{se}}(\hat\theta)=\sqrt{\frac{1}{B-1}\sum_{b=1}^{B}(\hat\theta_b-\bar{\hat\theta})^2}.
+\]
+\end{itemize}
+
+\newpage
+
+\noindent\large{{\bf{Question 1: Short conceptual questions (24 pts)}}}\\
+
+Answer briefly but clearly.
+
+\begin{enumerate}[(a)]
+    \item ({\bf 4 pts}) Explain the difference between a likelihood function and a probability density for a parameter. Why is the distinction important? \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for likelihood as a function of parameters with data fixed; 2 pts for posterior/prior interpretation.\\A likelihood is $p(D\mid\theta)$ viewed as a function of $\theta$ for fixed observed data. It is not automatically a normalized probability density over $\theta$. A probability density for a parameter, such as a posterior, requires a prior and normalization through Bayes' theorem.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 4 pts}) What is the central limit theorem and why does it matter for experimental physics? \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for the approximate Gaussian statement; 2 pts for the relevance to means/errors.\\For many independent measurements with finite variance, the sampling distribution of the mean becomes approximately Gaussian as the number of measurements grows. This explains why Gaussian error models often arise for averaged experimental quantities, even when individual measurements are not exactly Gaussian.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 4 pts}) Give one advantage and one limitation of the bootstrap. \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for a valid advantage; 2 pts for a valid limitation.\\An advantage is that it estimates uncertainty by resampling the observed data without requiring an analytic formula for the estimator variance. A limitation is that it assumes the observed sample is representative; it can fail for small samples, strong dependence, rare tails, or poorly sampled structure.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 4 pts}) State the difference between a frequentist confidence interval and a Bayesian credible interval. \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for confidence-interval coverage; 2 pts for credible-interval posterior probability.\\A confidence interval is a property of a procedure: in repeated experiments it covers the true value at a specified rate. A credible interval contains a specified amount of posterior probability for the parameter given the observed data and prior.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 4 pts}) What does the Bayesian evidence measure, and how is it used in model comparison? \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for evidence as prior-averaged likelihood; 2 pts for Bayes factors.\\The evidence $\mathcal Z=p(D\mid M)$ is the likelihood averaged over the prior parameter space of a model. Models can be compared with Bayes factors, i.e. ratios of evidences.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 4 pts}) Name two MCMC diagnostics and explain what each checks. \\
+    \begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 2 pts for each valid diagnostic with meaning.\\Examples include a trace plot, which checks whether the chain appears stationary and well mixed; autocorrelation or effective sample size, which checks how independent the samples are; and split-chain $\hat R$, which compares multiple chains.}{\givesolutions}
+    \end{ansbox}
+\end{enumerate}
+
+\newpage
+
+\noindent\large{{\bf{Question 2: Computational/theory problem (42 pts)}}}\\
+
+A detector repeatedly measures the same calibration offset $\mu$. The measurements are independent and have known Gaussian uncertainty $\sigma$:
+\[
+x_i\sim \mathcal N(\mu,\sigma^2), \qquad i=1,\dots,N.
+\]
+You want to compare two models:
+\begin{align*}
+M_0 &: \mu=0 \quad \text{(no calibration offset)},\\
+M_1 &: \mu \text{ unknown, with prior } \mu\sim\mathcal N(0,\tau^2).
+\end{align*}
+Let $\bar x=N^{-1}\sum_i x_i$.
+
+\begin{enumerate}[(a)]
+    \item ({\bf 7 pts}) Derive the maximum-likelihood estimator for $\mu$ under the Gaussian likelihood. \\
+    \begin{ansbox}{2.0in}
+    \answer{\textbf{Marking:} 3 pts for writing the log-likelihood; 2 pts for differentiating; 2 pts for the estimator.\\Ignoring constants,
+    \[
+    \log L(\mu)=-\frac{1}{2\sigma^2}\sum_{i=1}^N(x_i-\mu)^2.
+    \]
+    Differentiating gives
+    \[
+    \frac{d\log L}{d\mu}=\frac{1}{\sigma^2}\sum_i(x_i-\mu).
+    \]
+    Setting this to zero gives $\sum_i x_i-N\hat\mu=0$, so $\hat\mu_{\rm MLE}=\bar x$.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 9 pts}) Show that the posterior under $M_1$ is Gaussian and derive its mean and variance. \\
+    \begin{ansbox}{2.8in}
+    \answer{\textbf{Marking:} 3 pts for combining likelihood and prior; 3 pts for completing the square; 3 pts for final mean and variance.\\The posterior kernel is
+    \[
+    p(\mu\mid D,M_1)\propto \exp\!\left[-\frac{N}{2\sigma^2}(\mu-\bar x)^2\right]\exp\!\left[-\frac{\mu^2}{2\tau^2}\right].
+    \]
+    The quadratic coefficient is $N/\sigma^2+1/\tau^2$ and the linear coefficient is $N\bar x/\sigma^2$. Therefore
+    \[
+    \sigma_{\rm post}^2=\left(\frac{N}{\sigma^2}+\frac{1}{\tau^2}\right)^{-1},
+    \qquad
+    \mu_{\rm post}=\sigma_{\rm post}^2\frac{N\bar x}{\sigma^2}.
+    \]
+    Thus the posterior is $\mathcal N(\mu_{\rm post},\sigma_{\rm post}^2)$.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 8 pts}) Explain the limiting behavior of the posterior mean when $\tau\rightarrow\infty$ and when $\tau\rightarrow 0$. \\
+    \begin{ansbox}{1.8in}
+    \answer{\textbf{Marking:} 4 pts for the broad-prior limit; 4 pts for the narrow-prior limit.\\If $\tau\rightarrow\infty$, the prior becomes very broad and $1/\tau^2\rightarrow0$, so $\mu_{\rm post}\rightarrow\bar x$: the data dominate. If $\tau\rightarrow0$, the prior concentrates at zero and $1/\tau^2$ dominates, so $\mu_{\rm post}\rightarrow0$: the prior forces the calibration offset toward the no-offset value.}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 10 pts}) Derive the evidence under $M_1$ up to constants common to both models. Express your answer in terms of $\mu_{\rm post}$ and $\sigma_{\rm post}^2$. \\
+    \begin{ansbox}{2.6in}
+    \answer{\textbf{Marking:} 3 pts for evidence as an integral; 4 pts for completing the square; 3 pts for the Gaussian-integral result.\\The evidence is
+    \[
+    \mathcal Z_1=\int p(D\mid\mu,M_1)p(\mu\mid M_1)\,d\mu.
+    \]
+    Up to constants common to both models, the integrand has the posterior kernel
+    \[
+    \exp\!\left[-\frac{1}{2\sigma_{\rm post}^2}(\mu-\mu_{\rm post})^2\right]
+    \exp\!\left[\frac{\mu_{\rm post}^2}{2\sigma_{\rm post}^2}\right].
+    \]
+    Therefore
+    \[
+    \mathcal Z_1\propto \sqrt{\sigma_{\rm post}^2}\,
+    \exp\!\left[\frac{\mu_{\rm post}^2}{2\sigma_{\rm post}^2}\right].
+    \]}{\givesolutions}
+    \end{ansbox}
+
+    \item ({\bf 8 pts}) Explain qualitatively why a model with a free offset can be penalized by the evidence even if it fits the data better than $M_0$. \\
+    \begin{ansbox}{1.6in}
+    \answer{\textbf{Marking:} 4 pts for evidence as an average over prior volume; 4 pts for connecting this to model flexibility.\\The evidence averages the likelihood over the prior, rather than evaluating it only at the best fit. A model with a free parameter spreads prior probability over many possible offsets. If only a small fraction of that parameter space fits the data well, the evidence includes an Occam penalty for unused flexibility.}{\givesolutions}
+    \end{ansbox}
+\end{enumerate}
+
+\newpage
+
+\noindent\large{{\bf{Question 3: Code question (24 pts)}}}\\
+
+The following Python code estimates the uncertainty on the sample median using the bootstrap.
+Write the correct comment letter in each \verb|# [ ]| slot.
+Some comments are distractors, and two of the distractors are almost correct but not quite.
+
+\textbf{Task 1 (12 pts).} Fill the six \verb|# [ ]| slots with the correct letters. \\
+
+\textbf{Task 2 (5 pts).} State what statistical quantity is being estimated by the bootstrap. \\
+
+\textbf{Task 3 (7 pts).} Explain why the resampling is done with replacement and what the reported interval means. \\
+
+\begin{lstlisting}[language=Python,basicstyle=\ttfamily\normalsize]
+import numpy as np
+# [ ]
+rng = np.random.default_rng(2026)
+
+flux = np.array([9.8, 10.1, 9.9, 10.5, 10.2, 9.7, 10.4, 15.0])
+# [ ]
+observed = np.median(flux)
+
+nboot = 10000
+boot_medians = np.empty(nboot)
+# [ ]
+for b in range(nboot):
+    resample = rng.choice(flux, size=len(flux), replace=True)
+    boot_medians[b] = np.median(resample)
+    # [ ]
+
+se = np.std(boot_medians, ddof=1)
+lo, hi = np.percentile(boot_medians, [16, 84])
+# [ ]
+print(observed, se, lo, hi)
+# [ ]
+\end{lstlisting}
+
+\textbf{Comments list}
+\begin{enumerate}[A.]
+\item Import NumPy and initialize the random-number generator.
+\item Store the measured flux values and compute the statistic on the observed sample.
+\item Set the number of bootstrap samples and allocate storage for the bootstrap statistics.
+\item Draw a resample with replacement and store the median of that resample.
+\item Draw a new sample without replacement, because bootstrap samples must contain unique data points.
+\item Compute the bootstrap standard error and a central 68 percent percentile interval.
+\item Print the observed median, the estimated standard error, and the interval endpoints.
+\item Fit a Gaussian likelihood by maximizing the posterior probability.
+\item Estimate the Bayesian evidence by nested sampling.
+\item Compute a jackknife estimate by deleting one point at a time inside the loop.
+\end{enumerate}
+
+\textbf{Write your six letters here.}
+
+\begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 12 pts total, with 2 pts per correctly placed comment.\\Top to bottom: A, B, C, D, F, G. Distractors not used: E, H, I, J. The near-miss distractors are E, because bootstrap resampling is with replacement, and J, because the code is bootstrap rather than jackknife.}{\givesolutions}
+\end{ansbox}
+
+\textbf{State what is being estimated.}
+
+\begin{ansbox}{1.2in}
+    \answer{\textbf{Marking:} 5 pts for identifying the uncertainty of the median.\\The code estimates the sampling uncertainty of the sample median of the flux measurements. It reports the observed median, the bootstrap standard error of that median, and a percentile-based interval from the bootstrap distribution.}{\givesolutions}
+\end{ansbox}
+
+\textbf{Explain the resampling and interval.}
+
+\begin{ansbox}{2.2in}
+    \answer{\textbf{Marking:} 3 pts for resampling with replacement; 2 pts for bootstrap distribution; 2 pts for interval interpretation.\\Bootstrap resampling is done with replacement because the observed sample is treated as an empirical approximation to the unknown population distribution. Each resample mimics drawing a new dataset of the same size from that empirical distribution. The distribution of bootstrap medians approximates the sampling distribution of the median. The 16th and 84th percentiles give a central interval analogous to a one-sigma uncertainty range, but it is an empirical bootstrap interval rather than an analytic Gaussian result.}{\givesolutions}
+\end{ansbox}
+
+\end{document}
